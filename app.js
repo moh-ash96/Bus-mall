@@ -24,26 +24,26 @@ function Items(name, source){
 
 Items.allItems = [];
 
-new Items('bag', 'img/bag.jpg'); //0
-new Items('banana', 'img/banana.jpg'); //1
-new Items('bathroom', 'img/bathroom.jpg'); //2
-new Items('boots', 'img/boots.jpg'); //3
-new Items('breakfast', 'img/breakfast.jpg'); //4
-new Items('bubblegum', 'img/bubblegum.jpg'); //5
-new Items('chair', 'img/chair.jpg'); //6
-new Items('cthulhu', 'img/cthulhu.jpg'); //7
-new Items('dog-duck', 'img/dog-duck.jpg'); //8
-new Items('dragon', 'img/dragon.jpg'); //9
-new Items('pen', 'img/pen.jpg'); //10
-new Items('pet-sweep', 'img/pet-sweep.jpg'); //11
-new Items('scissors', 'img/scissors.jpg'); //12
-new Items('shark', 'img/shark.jpg'); //13
-new Items('sweep', 'img/sweep.png'); //14
-new Items('tauntaun', 'img/tauntaun.jpg'); //15
-new Items('unicorn', 'img/unicorn.jpg'); //16
-new Items('usb', 'img/usb.gif'); //17
-new Items('water-can', 'img/water-can.jpg'); //18
-new Items('wine-glass', 'img/wine-glass.jpg'); //19
+new Items('bag', 'img/bag.jpg');
+new Items('banana', 'img/banana.jpg');
+new Items('bathroom', 'img/bathroom.jpg');
+new Items('boots', 'img/boots.jpg');
+new Items('breakfast', 'img/breakfast.jpg');
+new Items('bubblegum', 'img/bubblegum.jpg');
+new Items('chair', 'img/chair.jpg');
+new Items('cthulhu', 'img/cthulhu.jpg');
+new Items('dog-duck', 'img/dog-duck.jpg');
+new Items('dragon', 'img/dragon.jpg');
+new Items('pen', 'img/pen.jpg');
+new Items('pet-sweep', 'img/pet-sweep.jpg');
+new Items('scissors', 'img/scissors.jpg');
+new Items('shark', 'img/shark.jpg');
+new Items('sweep', 'img/sweep.png');
+new Items('tauntaun', 'img/tauntaun.jpg');
+new Items('unicorn', 'img/unicorn.jpg');
+new Items('usb', 'img/usb.gif');
+new Items('water-can', 'img/water-can.jpg');
+new Items('wine-glass', 'img/wine-glass.jpg');
 console.log(Items.allItems);
 
 function generateRandomIndex() {
@@ -83,13 +83,11 @@ function showfreq() {
             Items.allItems[i].shows++
             
         }
-        // console.log(Items.allItems[i]);
     }
 }
 
 function handleUserClick(event) {
     userAttemptsCounter++;
-    // console.log(event.target.id);
     if (userAttemptsCounter <= maxAttempts) {
         if (event.target.id == 'first-img') {
             Items.allItems[firstImgIndex].votes++
