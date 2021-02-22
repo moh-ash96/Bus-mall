@@ -8,7 +8,10 @@ main p {
     margin-top: 85px;
 }
  main img {
-     width: 22%;
+    border-style: outset;
+    width: 22%;
+    border-width: thick;
+    border-color: cadetblue;
  }
  main ul li {
     font-size: 25px;
@@ -23,10 +26,15 @@ main p {
     height: 58px;
     font-family: fantasy;
     font-size: 28px;
-    background-color: wheat;
+    color: #ffe3de;
+    background-color: #0a043c;
     border-style: outset;
     border-width: thick;
     position: relative;
     top: 103px;
     right: 533px;
+ }
+
+ canvas {
+     margin-top: 172px;
  }
