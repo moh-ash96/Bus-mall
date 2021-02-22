@@ -2,7 +2,7 @@
 
 let firstImg = document.getElementById('first-img');
 let secondImg = document.getElementById('second-img');
-let thirdImg = document.getElementById ('third-img');
+let thirdImg = document.getElementById('third-img');
 
 let firstImgIndex;
 let secondImgIndex;
@@ -13,7 +13,7 @@ let maxAttempts = 25;
 let userAttemptsCounter = 0;
 
 
-function Items(name, source){
+function Items(name, source) {
     this.name = name;
     this.source = source;
     this.votes = 0;
@@ -47,80 +47,70 @@ new Items('wine-glass', 'img/wine-glass.jpg');
 console.log(Items.allItems);
 
 function generateRandomIndex() {
-    return Math.floor(Math.random()* Items.allItems.length);
-    
+    return Math.floor(Math.random() * Items.allItems.length);
+
 }
 
 function renderThreeImages() {
-    firstImgIndex = generateRandomIndex ();
-    secondImgIndex = generateRandomIndex ();
-    thirdImgIndex = generateRandomIndex ();
+    firstImgIndex = generateRandomIndex();
+    secondImgIndex = generateRandomIndex();
+    thirdImgIndex = generateRandomIndex();
 
     while (firstImgIndex === secondImgIndex || firstImgIndex === thirdImgIndex || secondImgIndex === thirdImgIndex) {
         secondImgIndex = generateRandomIndex();
-        thirdImgIndex = generateRandomIndex ();
+        thirdImgIndex = generateRandomIndex();
     }
-     Items.allItems
-     console.log(firstImgIndex);
-     console.log(secondImgIndex);   
-     console.log(thirdImgIndex);
+    Items.allItems
+    console.log(firstImgIndex);
+    console.log(secondImgIndex);
+    console.log(thirdImgIndex);
 
-     firstImg.src = Items.allItems[firstImgIndex].source;
-     secondImg.src = Items.allItems[secondImgIndex].source;
-     thirdImg.src = Items.allItems[thirdImgIndex].source;    
+    firstImg.src = Items.allItems[firstImgIndex].source;
+    secondImg.src = Items.allItems[secondImgIndex].source;
+    thirdImg.src = Items.allItems[thirdImgIndex].source;
 }
 renderThreeImages();
 
-firstImg.addEventListener('click', handleUserClick);
-secondImg.addEventListener('click', handleUserClick);
-thirdImg.addEventListener('click', handleUserClick);
+let imgClick = document.getElementById(imgs);
+imgs.addEventListener('click', handleUserClick);
 
 function showfreq() {
-    for (let i=0; i<Items.allItems.length; i++){
-
-        
-        if ( firstImgIndex ==  i  ||  secondImgIndex ==  i || thirdImgIndex == i){
+    for (let i = 0; i < Items.allItems.length; i++) {
+        if (firstImgIndex == i || secondImgIndex == i || thirdImgIndex == i) {
             Items.allItems[i].shows++
-            
+
         }
     }
 }
+let resultButton = document.getElementById('resultsButton');
 
 function handleUserClick(event) {
     userAttemptsCounter++;
     if (userAttemptsCounter <= maxAttempts) {
         if (event.target.id == 'first-img') {
             Items.allItems[firstImgIndex].votes++
-        }else if (event.target.id == 'second-img') {
+        } else if (event.target.id == 'second-img') {
             Items.allItems[secondImgIndex].votes++
-        }else {
+        } else {
             Items.allItems[thirdImgIndex].votes++
         }
-        
+
         renderThreeImages();
         showfreq();
-    } else{
-
-        let resultButton = document.getElementById('resultsButton');
+    } else {
         resultButton.addEventListener('click', generateResultList);
-        function generateResultList() {
-            let resultList = document.getElementById('results-list');
-            let results;
-            for (let i=0; i<Items.allItems.length; i++){
-                results = document.createElement('li');
-                resultList.appendChild(results);
-                results.textContent= Items.allItems[i].name + ' had ' + Items.allItems[i].votes + ' votes ' + 'and was seen '  + Items.allItems[i].shows + ' times.'
-                
-            }
-            resultButton.removeEventListener('click', generateResultList);
-        }
-        
-
-        
     }
-    
-    
-    
 }
 
+function generateResultList() {
+    let resultList = document.getElementById('results-list');
+    let results;
+    for (let i = 0; i < Items.allItems.length; i++) {
+        results = document.createElement('li');
+        resultList.appendChild(results);
+        results.textContent = Items.allItems[i].name + ' had ' + Items.allItems[i].votes + ' votes ' + 'and was seen ' + Items.allItems[i].shows + ' times.'
+
+    }
+    resultButton.removeEventListener('click', generateResultList);
+}
 
