@@ -32,7 +32,6 @@ function Items(name, source) {
     this.votes = 0;
     this.shows = 0;
     Items.allItems.push(this);
-    // this.name.push(objectName);
     objectName.push(this.name);
 
 
@@ -170,8 +169,8 @@ function generateResultList() {
 
 // chart
 function chart() {
-    var ctx = document.getElementById('myChart').getContext('2d');
-    var chart = new Chart(ctx, {
+    let ctx = document.getElementById('myChart').getContext('2d');
+    let chart = new Chart(ctx, {
         // The type of chart we want to create
         type: 'bar',
 
