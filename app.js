@@ -11,6 +11,19 @@ let thirdImgIndex;
 let maxAttempts = 25;
 
 let userAttemptsCounter = 0;
+let objectName = [];
+let votesCount = [];
+let viewCount = [];
+let rendering = [];
+
+
+function unDuplicateArraySingleValue(array) {
+    if (!array || !Array.isArray(array) || array.length === 0) {
+
+        return array;
+    }
+    return [...new Set(array)];
+}
 
 
 function Items(name, source) {
@@ -19,6 +32,9 @@ function Items(name, source) {
     this.votes = 0;
     this.shows = 0;
     Items.allItems.push(this);
+    // this.name.push(objectName);
+    objectName.push(this.name);
+
 
 }
 
@@ -44,48 +60,71 @@ new Items('unicorn', 'img/unicorn.jpg');
 new Items('usb', 'img/usb.gif');
 new Items('water-can', 'img/water-can.jpg');
 new Items('wine-glass', 'img/wine-glass.jpg');
-console.log(Items.allItems);
+// console.log(Items.allItems);
 
+
+//random index function
 function generateRandomIndex() {
     return Math.floor(Math.random() * Items.allItems.length);
-
 }
 
+
+
+
+
+// render function
 function renderThreeImages() {
     firstImgIndex = generateRandomIndex();
     secondImgIndex = generateRandomIndex();
     thirdImgIndex = generateRandomIndex();
-
-    while (firstImgIndex === secondImgIndex || firstImgIndex === thirdImgIndex || secondImgIndex === thirdImgIndex) {
+    
+    
+    while (firstImgIndex === secondImgIndex || firstImgIndex === thirdImgIndex || secondImgIndex === thirdImgIndex || rendering.includes(firstImgIndex) || rendering.includes(secondImgIndex) || rendering.includes(thirdImgIndex)) {
+        
+        
+        firstImgIndex = generateRandomIndex();
         secondImgIndex = generateRandomIndex();
         thirdImgIndex = generateRandomIndex();
     }
-    Items.allItems
-    console.log(firstImgIndex);
-    console.log(secondImgIndex);
-    console.log(thirdImgIndex);
+    rendering = [];
+    rendering.push(firstImgIndex, secondImgIndex, thirdImgIndex);
 
+    
+    Items.allItems
     firstImg.src = Items.allItems[firstImgIndex].source;
     secondImg.src = Items.allItems[secondImgIndex].source;
     thirdImg.src = Items.allItems[thirdImgIndex].source;
+    
+    console.log(rendering);
 }
+
 renderThreeImages();
 
+
+
+// event listner for img
 let imgClick = document.getElementById(imgs);
 imgs.addEventListener('click', handleUserClick);
 
+
+// shows function
 function showfreq() {
     for (let i = 0; i < Items.allItems.length; i++) {
         if (firstImgIndex == i || secondImgIndex == i || thirdImgIndex == i) {
             Items.allItems[i].shows++
-
         }
     }
 }
+
+// button referance
 let resultButton = document.getElementById('resultsButton');
 
+
+// button function & votes++
 function handleUserClick(event) {
+    
     userAttemptsCounter++;
+    
     if (userAttemptsCounter <= maxAttempts) {
         if (event.target.id == 'first-img') {
             Items.allItems[firstImgIndex].votes++
@@ -94,14 +133,22 @@ function handleUserClick(event) {
         } else {
             Items.allItems[thirdImgIndex].votes++
         }
-
-        renderThreeImages();
-        showfreq();
+        renderThreeImages(); // render function
+        showfreq(); // shows function
     } else {
-        resultButton.addEventListener('click', generateResultList);
+        resultButton.addEventListener('click', generateResultList); // button (on)
+        for (let i = 0; i < Items.allItems.length; i++) {
+            votesCount.push(Items.allItems[i].votes);
+            viewCount.push(Items.allItems[i].shows);
+            // console.log(Items.allItems[i].votes);
+        }
+        chart();
     }
 }
 
+
+
+// list function
 function generateResultList() {
     let resultList = document.getElementById('results-list');
     let results;
@@ -109,8 +156,57 @@ function generateResultList() {
         results = document.createElement('li');
         resultList.appendChild(results);
         results.textContent = Items.allItems[i].name + ' had ' + Items.allItems[i].votes + ' votes ' + 'and was seen ' + Items.allItems[i].shows + ' times.'
-
     }
-    resultButton.removeEventListener('click', generateResultList);
+    
+    resultButton.removeEventListener('click', generateResultList); // button (off)
+}
+// console.log(votesCount);
+// console.log(viewCount);
+
+
+
+
+
+
+// chart
+function chart() {
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var chart = new Chart(ctx, {
+        // The type of chart we want to create
+        type: 'bar',
+
+        // The data for our dataset
+        data: {
+            labels: objectName,
+            datasets: [{
+                label: 'Votes',
+                backgroundColor: ' #0a043c ',
+                borderColor: ' #0a043c ',
+                data: votesCount,
+            },
+            {
+                label: 'Views',
+                backgroundColor: '#03506f',
+                borderColor: '#03506f',
+                data: viewCount,
+            }]
+        },
+
+        // Configuration options go here
+        options: {}
+    });
 }
 
+
+
+
+
+
+
+
+
+
+
+
+// console.log(objectName);
+// console.log(votesCount);
