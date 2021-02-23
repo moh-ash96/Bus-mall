@@ -10,6 +10,7 @@ main p {
  main img {
     border-style: outset;
     width: 22%;
+    height: 218px;
     border-width: thick;
     border-color: cadetblue;
  }
