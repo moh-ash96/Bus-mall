@@ -8,22 +8,22 @@ let firstImgIndex;
 let secondImgIndex;
 let thirdImgIndex;
 
-let maxAttempts = 25;
-
+let maxAttempts = 15;
 let userAttemptsCounter = 0;
+
 let objectName = [];
 let votesCount = [];
 let viewCount = [];
 let rendering = [];
 
 
-function unDuplicateArraySingleValue(array) {
-    if (!array || !Array.isArray(array) || array.length === 0) {
+// function unDuplicateArraySingleValue(array) {
+//     if (!array || !Array.isArray(array) || array.length === 0) {
 
-        return array;
-    }
-    return [...new Set(array)];
-}
+//         return array;
+//     }
+//     return [...new Set(array)];
+// }
 
 
 function Items(name, source) {
@@ -33,12 +33,32 @@ function Items(name, source) {
     this.shows = 0;
     Items.allItems.push(this);
     objectName.push(this.name);
-
-
+    
 }
-
 Items.allItems = [];
 
+
+function gettingItems() {
+    let stringObject= localStorage.getItem('votes');
+    
+    let normalObject=JSON.parse(stringObject);
+    
+    if (normalObject !== null){
+        Items.allItems = normalObject;
+    }
+    
+}
+
+
+
+
+// if 
+// (localStorage.getItem('votes')){
+//     Items.allItems = JSON.parse (localStorage.getItem('votes'));
+    
+// } else {
+   
+    
 new Items('bag', 'img/bag.jpg');
 new Items('banana', 'img/banana.jpg');
 new Items('bathroom', 'img/bathroom.jpg');
@@ -59,6 +79,7 @@ new Items('unicorn', 'img/unicorn.jpg');
 new Items('usb', 'img/usb.gif');
 new Items('water-can', 'img/water-can.jpg');
 new Items('wine-glass', 'img/wine-glass.jpg');
+// }
 // console.log(Items.allItems);
 
 
@@ -87,7 +108,7 @@ function renderThreeImages() {
     }
     rendering = [];
     rendering.push(firstImgIndex, secondImgIndex, thirdImgIndex);
-
+    
     
     Items.allItems
     firstImg.src = Items.allItems[firstImgIndex].source;
@@ -95,6 +116,7 @@ function renderThreeImages() {
     thirdImg.src = Items.allItems[thirdImgIndex].source;
     
     console.log(rendering);
+    
 }
 
 renderThreeImages();
@@ -112,11 +134,14 @@ function showfreq() {
         if (firstImgIndex == i || secondImgIndex == i || thirdImgIndex == i) {
             Items.allItems[i].shows++
         }
+        
     }
+    
 }
 
 // button referance
 let resultButton = document.getElementById('resultsButton');
+
 
 
 // button function & votes++
@@ -139,11 +164,23 @@ function handleUserClick(event) {
         for (let i = 0; i < Items.allItems.length; i++) {
             votesCount.push(Items.allItems[i].votes);
             viewCount.push(Items.allItems[i].shows);
-            // console.log(Items.allItems[i].votes);
+            
         }
+        
+        imgs.removeEventListener('click', handleUserClick);
+        
+        
+        localStorage.setItem('votes', JSON.stringify(Items.allItems));
         chart();
+        
+        
+        console.log(votesCount);
+        console.log(viewCount);
     }
+    
 }
+
+
 
 
 
@@ -159,8 +196,8 @@ function generateResultList() {
     
     resultButton.removeEventListener('click', generateResultList); // button (off)
 }
-// console.log(votesCount);
-// console.log(viewCount);
+
+
 
 
 
@@ -171,10 +208,10 @@ function generateResultList() {
 function chart() {
     let ctx = document.getElementById('myChart').getContext('2d');
     let chart = new Chart(ctx, {
-        // The type of chart we want to create
+        
         type: 'bar',
-
-        // The data for our dataset
+        
+        
         data: {
             labels: objectName,
             datasets: [{
@@ -187,11 +224,11 @@ function chart() {
                 label: 'Views',
                 backgroundColor: '#03506f',
                 borderColor: '#03506f',
-                data: viewCount,
+                data: viewCount ,
             }]
         },
-
-        // Configuration options go here
+        
+        
         options: {}
     });
 }
@@ -200,12 +237,4 @@ function chart() {
 
 
 
-
-
-
-
-
-
-
-// console.log(objectName);
-// console.log(votesCount);
+ gettingItems();
